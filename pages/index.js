@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <main>
-        {/* <Inventory /> */}
+        <Inventory />
       </main>
     </div>
   );
