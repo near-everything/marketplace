@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { gql, request } from "graphql-request";
+import { gql } from "graphql-request";
 import Image from "next/image";
 import React from "react";
 import { PulseLoader } from "react-spinners";
+import { graphqlClient } from "../app/api";
 import Characteristic from "./Characteristic";
 
 function ThingCard({ thingId }) {
@@ -12,8 +13,7 @@ function ThingCard({ thingId }) {
     isError,
     error,
   } = useQuery(["thingById", thingId], async () => {
-    const { thing } = await request(
-      process.env.NEXT_PUBLIC_EVERYTHING_API_URL,
+    const { thing } = await graphqlClient.request(
       gql`
         query thingById($thingId: Int!) {
           thing(id: $thingId) {
@@ -47,7 +47,7 @@ function ThingCard({ thingId }) {
           />
         </>
       ) : (
-        <div className="card card-compact w-96 bg-base-100 shadow-xl">
+        <div className="card card-compact bg-base-100 shadow-xl">
           <figure className="h-64 relative">
             <Image
               src={thing.media[0]}
@@ -59,7 +59,9 @@ function ThingCard({ thingId }) {
           <div className="card-body">
             <div className="card-actions">
               {thing.characteristics.edges?.map((it) => {
-                return (<Characteristic key={it.node.attributeId} char={it.node} />)
+                return (
+                  <Characteristic key={it.node.attributeId} char={it.node} />
+                );
               })}
             </div>
             <div className="card-actions">

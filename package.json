@@ -12,11 +12,14 @@
     "@tanstack/react-query": "^4.2.1",
     "@tanstack/react-query-devtools": "^4.2.1",
     "daisyui": "^2.24.0",
+    "firebase": "^9.9.3",
     "graphql": "^16.6.0",
     "graphql-request": "^4.3.0",
     "next": "12.2.5",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-phone-input-2": "^2.15.1",
     "react-spinners": "^0.13.4"
   },
   "devDependencies": {

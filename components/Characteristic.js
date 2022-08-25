@@ -1,47 +1,32 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { gql, request } from "graphql-request";
+import { gql } from "graphql-request";
+import { graphqlClient } from "../app/api";
 
 function Characteristic({ char }) {
   const {
     data: attr,
     isLoading: attributeIsLoading,
     isError: attributeIsError,
-  } = useQuery(
-    ["attributeById", char.attributeId],
-    async () => {
-      const attribute = await request(
-        process.env.NEXT_PUBLIC_EVERYTHING_API_URL,
-        gql`
-          query attributeById($attributeId: Int!) {
-            attribute(id: $attributeId) {
-              name
-              relationships {
-                edges {
-                  node {
-                    option {
-                      id
-                      value
-                    }
-                  }
-                }
-              }
-            }
+  } = useQuery(["attributeById", char.attributeId], async () => {
+    const { attribute } = await graphqlClient.request(
+      gql`
+        query attributeById($attributeId: Int!) {
+          attribute(id: $attributeId) {
+            name
           }
-        `,
-        { attributeId: char.attributeId }
-      );
-      return attribute;
-    },
-    options
-  );
+        }
+      `,
+      { attributeId: char.attributeId }
+    );
+    return attribute;
+  });
   const {
     data: opt,
     isLoading: optionIsLoading,
     isError: optionIsError,
   } = useQuery(["optionById", char.optionId], async () => {
-    const option = await request(
-      process.env.NEXT_PUBLIC_EVERYTHING_API_URL,
+    const { option } = await graphqlClient.request(
       gql`
         query optionById($optionId: Int!) {
           option(id: $optionId) {
@@ -57,7 +42,17 @@ function Characteristic({ char }) {
   return (
     <>
       <div className="badge badge-outline">
-        {attr.name} : {opt.value}
+        {attributeIsLoading
+          ? "Loading..."
+          : attributeIsError
+          ? "Error"
+          : `${attr.name}`}
+        {": "}
+        {optionIsLoading
+          ? "Loading..."
+          : optionIsError
+          ? "Error"
+          : `${opt.value}`}
       </div>
     </>
   );
