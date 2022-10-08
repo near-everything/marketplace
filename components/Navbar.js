@@ -1,29 +1,22 @@
-import { getApp } from "firebase/app";
-import { getAuth, signOut } from "firebase/auth";
+import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
-import React from "react";
-import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const { user } = useAuth();
-  const auth = getAuth();
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("successfully signed out");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const { user, isLoading } = useUser();
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">everything</a>
+        <Link href="/" passHref>
+          <button className="btn btn-ghost">
+            <div className="flex flex-col text-right">
+              <p className="normal-case text-4xl">everything</p>
+              <p className="text-sm justify-end">MARKETPLACE</p>
+            </div>
+          </button>
+        </Link>
       </div>
-      <div className="flex-none">
+      <div className="flex-none mt-2 mr-2">
         <div className="dropdown dropdown-end">
           <label tabIndex="0" className="btn btn-ghost btn-circle">
             <div className="indicator">
@@ -86,9 +79,26 @@ function Navbar() {
           </>
         ) : (
           <>
-            <Link href="/login">
-              <button className="btn">Login</button>
-            </Link>
+            {isLoading ? null : (
+              <>
+                {user ? (
+                  <>
+                    <span className="flex flex-row items-center gap-4">
+                      <p className="">{user.nickname}</p>
+                      <a className="btn normal-case" href="/api/auth/logout">
+                        logout
+                      </a>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <a className="btn normal-case" href="/api/auth/login">
+                      login
+                    </a>
+                  </>
+                )}
+              </>
+            )}
           </>
         )}
       </div>

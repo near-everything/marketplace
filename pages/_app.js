@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import { UserProvider } from "@auth0/nextjs-auth0";
 import {
   Hydrate,
   QueryClient,
-  QueryClientProvider,
+  QueryClientProvider
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import initFirebaseClientSDK from "../app/firebaseClient";
+import React, { useState } from "react";
 import "../styles/globals.css";
-import { AuthProvider } from "../context/AuthContext";
-
-initFirebaseClientSDK();
 
 function App({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient());
   const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
-      <AuthProvider>
+      <UserProvider>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             {getLayout(<Component {...pageProps} />)}
             <ReactQueryDevtools initialIsOpen={false} />
           </Hydrate>
         </QueryClientProvider>
-      </AuthProvider>
+      </UserProvider>
     </>
   );
 }
