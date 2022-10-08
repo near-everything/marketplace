@@ -6,9 +6,7 @@ export default function Home() {
       <main className="h-screen">
         <Navbar />
         <div className="flex flex-1 justify-center items-center h-3/4">
-          <div className="text-center transition ease-in-out duration-500 hover:text-black">
-            {/* <p className="text-sm mr-32">the inventory of</p> */}
-            {/* <h1 className="text-4xl">everything</h1> */}
+          <div className="text-center transition ease-in-out duration-500 hover:text-black px-16">
             <p className="text-sm mt-2">
               this will be a marketplace.
             </p>
