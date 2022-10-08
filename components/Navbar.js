@@ -1,8 +1,7 @@
-import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 
 function Navbar() {
-  const { user, isLoading } = useUser();
+  // const { user, isLoading } = useUser();
 
   return (
     <div className="navbar">
@@ -16,7 +15,7 @@ function Navbar() {
           </button>
         </Link>
       </div>
-      <div className="flex-none mt-2 mr-2">
+      {/* <div className="flex-none mt-2 mr-2">
         <div className="dropdown dropdown-end">
           <label tabIndex="0" className="btn btn-ghost btn-circle">
             <div className="indicator">
@@ -101,7 +100,7 @@ function Navbar() {
             )}
           </>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
