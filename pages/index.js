@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>everything marketplace</title>
+        <title>everything | marketplace</title>
       </Head>
       <main className="h-screen">
         <Navbar />
