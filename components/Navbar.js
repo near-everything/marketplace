@@ -6,14 +6,14 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="flex-1">
-        <Link href="/" passHref>
+        <a href="https://about.everything.dev">
           <button className="btn btn-ghost">
             <div className="flex flex-col text-right">
               <p className="normal-case text-4xl">everything</p>
               <p className="text-sm justify-end">MARKETPLACE</p>
             </div>
           </button>
-        </Link>
+        </a>
       </div>
       {/* <div className="flex-none mt-2 mr-2">
         <div className="dropdown dropdown-end">
